@@ -8,6 +8,7 @@ import com.study.convpay.type.PayResult;
 
 public class ConveniencePayService {
     private final MoneyAdapter moneyAdapter = new MoneyAdapter(); // 한 번 생성하면 바뀌면 안됨. final
+    private final CardAdapter cardAdapter = new CardAdapter();
 
     /**
      * 결제
