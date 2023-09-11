@@ -6,6 +6,7 @@ import com.study.convpay.dto.PayRequest;
 import com.study.convpay.dto.PayResponse;
 import com.study.convpay.service.ConveniencePayService;
 import com.study.convpay.type.ConvenienceType;
+import com.study.convpay.type.PayMethodType;
 
 public class UserClient {
     public static void main(String[] args) {
@@ -14,12 +15,12 @@ public class UserClient {
         ConveniencePayService conveniencePayService = new ConveniencePayService();
 
         // 결제 1000원
-        PayRequest payRequest = new PayRequest(ConvenienceType.G25, 1000);
+        PayRequest payRequest = new PayRequest(ConvenienceType.G25, PayMethodType.MONEY, 1000);
         PayResponse payResponse = conveniencePayService.pay(payRequest);
         System.out.println("payResponse = " + payResponse);
         // 취소 500원
 
-        PayCancelRequest payCancelRequest = new PayCancelRequest(ConvenienceType.G25, 500);
+        PayCancelRequest payCancelRequest = new PayCancelRequest(ConvenienceType.G25, PayMethodType.CARD, 500);
         PayCancelResponse payCancelResponse = conveniencePayService.payCancel(payCancelRequest);
         System.out.println("payCancelResponse = " + payCancelResponse);
     }
