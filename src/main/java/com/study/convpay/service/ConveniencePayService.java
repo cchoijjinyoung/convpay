@@ -6,6 +6,8 @@ import com.study.convpay.type.*;
 public class ConveniencePayService {
     private final MoneyAdapter moneyAdapter = new MoneyAdapter(); // 한 번 생성하면 바뀌면 안됨. final
     private final CardAdapter cardAdapter = new CardAdapter();
+    //    private final DiscountInterface discountInterface = new DiscountByPayMethod();
+    private final DiscountInterface discountInterface = new DiscountByConvenience();
 
     /**
      * 결제
@@ -18,14 +20,14 @@ public class ConveniencePayService {
         } else {
             paymentInterface = moneyAdapter;
         }
-
-        PaymentResult paymentResult = paymentInterface.payment(payRequest.getPayAmount());
+        Integer discountedAmount = discountInterface.getDiscountedAmount(payRequest);
+        PaymentResult paymentResult = paymentInterface.payment(discountedAmount);
 
         if (paymentResult == PaymentResult.PAYMENT_FAIL) {
             return new PayResponse(PayResult.FAIL, 0);
         }
         // 그래서 단 하나의 성공 케이스를 마지막에 한다.
-        return new PayResponse(PayResult.SUCCESS, payRequest.getPayAmount());
+        return new PayResponse(PayResult.SUCCESS, discountedAmount);
     }
 
     /**
